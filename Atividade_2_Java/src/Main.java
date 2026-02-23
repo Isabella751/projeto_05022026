@@ -98,13 +98,39 @@ public class Main {
         }
     }
 
-    private static void excluirTurma() {
+    private static void listarAlunos() {
+
+        if(listaAlunos.isEmpty()){
+            System.out.println("Não há alunos cadastrados.");
+            return;
+        }
+        for(Aluno a: listaAlunos){
+            System.out.println(a);
+        }
     }
 
-    private static void atualizarTurma() {
+    private static void cadastrarAluno() {
+    }
+
+    private static void atualizarAluno() {
+    }
+
+    private static void excluirAluno() {
+    }
+
+    private static void listarTurmas() {
+
+        if(listaTurmas.isEmpty()) {
+            System.out.println("Não há turmas cadastradas.");
+            return;
+        }
+        for(Turma t: listaTurmas){
+            System.out.println(t);
+        }
     }
 
     private static void cadastrarTurma() {
+
         Periodo periodo = validarPeriodo();
 
         String curso = Leitura.dados("Digite o curso:  ");
@@ -114,33 +140,37 @@ public class Main {
         }
 
         String sigla = Leitura.dados("Digite a sigla:  ");
-        boolean repetido = true;
-        while(sigla.isBlank() && !repetido) {
-            System.out.println("Sigla inválida!");
+        while(!validarSigla(sigla)){
+            System.out.println("Sigla inválida! Precisa conter texto e não pode ser repetida.");
             sigla = Leitura.dados("Digite a sigla:  ");
-            sigla = sigla.toUpperCase();
         }
-
-        for(Turma t: listaTurmas) {
-            if (t.getSigla().equals(sigla)) {
-                System.out.println("Turma já cadastrada.");
-                repetido = true;
-            }
-        }
-
-        repetido = false;
 
         Turma turma = new Turma(curso, sigla, periodo);
         listaTurmas.add(turma);
+        System.out.println("Turma cadastrada com sucesso!");
+        menuTurmas();
+    }
+
+    private static boolean validarSigla(String sigla) {
+
+        if(sigla.isBlank()) return false;
+
+        for (Turma turma : listaTurmas) {
+            if (turma.getSigla().equals(sigla)) return false;
         }
 
-    private static boolean isCharacter(String curso) {
-            String cursoSemNumeros = curso.replaceAll("\\d", "");
-            return !curso.isBlank() && curso.equals(cursoSemNumeros);
-        }
+        return true;
+    }
+
+    private static boolean isCharacter(String texto) {
+
+        String textoSemNumeros = texto.replaceAll("\\d", "");
+        return !texto.isBlank() && texto.equals(textoSemNumeros);
+    }
 
 
     private static Periodo validarPeriodo() {
+
         String opcaoPeriodo = Leitura.dados("""
                 Escolha o período:
                 1 - Matutino
@@ -162,32 +192,9 @@ public class Main {
         }
     }
 
-    private static void listarTurmas() {
-        if(listaTurmas.isEmpty()) {
-            System.out.println("Não há turmas cadastradas.");
-            return;
-        }
-        for(Turma t: listaTurmas){
-            System.out.println(t);
-        }
+    private static void atualizarTurma() {
     }
 
-    private static void excluirAluno() {
-    }
-
-    private static void atualizarAluno() {
-    }
-
-    private static void cadastrarAluno() {
-    }
-
-    private static void listarAlunos() {
-        if(listaAlunos.isEmpty()){
-            System.out.println("Não há alunos cadastrados.");
-            return;
-        }
-        for(Aluno a: listaAlunos){
-            System.out.println(a);
-        }
+    private static void excluirTurma() {
     }
 }
