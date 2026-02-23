@@ -193,8 +193,47 @@ public class Main {
     }
 
     private static void atualizarTurma() {
+
     }
 
     private static void excluirTurma() {
+
+        listaTurmasIndiceSigla();
+        String opcao = Leitura.dados("\nDigite o número da turma que deseja excluir:  ");
+        int opcaoValida = -1;
+        while (validarOpcaoExcluir(opcao)==-1){
+            System.out.println("Opção inválida. Digite novamente!");
+            opcao = Leitura.dados("\nDigite o número da turma que deseja excluir:  ");
+        }
+
+        listaTurmas.remove(validarOpcaoExcluir(opcao));
+        System.out.println("\nLista das turmas:");
+        for(int i=0; i<listaTurmas.size(); i++){
+            System.out.printf("\n%d - %s", i+1,listaTurmas.get(i).getSigla());
+        }
+    }
+
+    private static void listaTurmasIndiceSigla() {
+
+        System.out.println("\nLista das turmas:");
+        for(int i=0; i<listaTurmas.size(); i++){
+            System.out.printf("\n%d - %s", i+1,listaTurmas.get(i).getSigla());
+        }
+    }
+
+    private static int validarOpcaoExcluir(String opcao) {
+
+        if(opcao.isBlank()) return -1;
+
+        int opcaoNumero = -1;
+
+        try{
+            opcaoNumero = Integer.parseInt(opcao);
+        } catch (NumberFormatException e){
+            return -1;
+        }
+
+        int indiceLista = opcaoNumero-1;
+        return indiceLista >= 0 && listaTurmas.size() > indiceLista ? indiceLista : -1;
     }
 }
