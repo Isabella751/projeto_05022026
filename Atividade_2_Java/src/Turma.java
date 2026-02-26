@@ -2,13 +2,22 @@ public class Turma {
     private String curso;
     private String sigla;
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    private boolean ativo;
+
     public Turma(String curso, String sigla, Periodo periodo) {
         this.curso = curso;
         this.sigla = sigla;
         this.periodo = periodo;
+        this.ativo = true;
     }
-
-
 
     private Periodo periodo;
 
