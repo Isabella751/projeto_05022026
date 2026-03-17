@@ -376,15 +376,40 @@ public class Main {
 
     private static void excluirAluno() {
 
+        if(isVazioAluno(listaAlunos)) {
+            System.out.println("Não há alunos cadastrados no sistema.");
+            return;
+        }
+
+        listarTurmasIndiceSigla();
+        validaIdTurmaDoAluno();
+
+        int idExcluir = validaIdAluno();
+
+        Turma turmaSelecionada = listaTurmas.get(idExcluir);
+
+        int contador = 1;
+
+        for (int i = 0; i < listaAlunos.size(); i++) {
+            if (listaAlunos.get(i).getTurma().equals(turmaSelecionada)) {
+                System.out.println(contador + " - " + listaAlunos.get(i).getNome());
+                contador++;
+            }
+        }
+
+        if (confirmaExclusao()){
+            listaTurmas.get(idExcluir).setAtivo(false);
+            System.out.println("Aluno excluído com sucesso!");
+
+        }
+
     }
 
     private static void atualizarAluno() {
         if(isVazioAluno(listaAlunos)) {
-            System.out.println("Não há alunos cadastrados.");
+            System.out.println("Não há alunos cadastrados no sistema..");
             return;
         }
-
-        // int idAtualizarAluno = validaIdAluno();
 
         listarTurmasIndiceSigla();
 
@@ -438,7 +463,6 @@ public class Main {
         return opcaoValida;
     }
 
-
     private static int validaIdTurmaDoAluno() {
 
         String opcao = Leitura.dados("\nDigite o id da turma do aluno: ");
@@ -456,24 +480,6 @@ public class Main {
         }
         return opcaoValida;
     }
-
-//    private static int validaIdAluno() {
-//
-//        String opcao = Leitura.dados("\nDigite o número da turma desejada: ");
-//        int opcaoValida = -1;
-//        int opcaoUsuario = -1;
-//        while (opcaoValida==-1){
-//            opcaoUsuario = validarItemLista(opcao);
-//
-//            if (opcaoUsuario==-1) {
-//                System.out.println("Opção inválida! Digite novamente: ");
-//                opcao = Leitura.dados("Digite o número da turma desejada: ");
-//            } else {
-//                opcaoValida = opcaoUsuario;
-//            }
-//        }
-//        return opcaoValida;
-//    }
 
     private static void cadastrarAluno() {
         String nome = validarNome();
@@ -537,11 +543,9 @@ public class Main {
         return nome;
     }
 
-
-
     private static void listarAlunos() {
         if(isVazioAluno(listaAlunos)){
-            System.out.println("Não há alunos cadastrados.");
+            System.out.println("Não há alunos cadastrados no sistema.");
             return;
         }
         for(Aluno a : listaAlunos){
