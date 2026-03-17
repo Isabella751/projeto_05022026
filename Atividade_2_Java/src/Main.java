@@ -382,11 +382,10 @@ public class Main {
         }
 
         listarTurmasIndiceSigla();
-        validaIdTurmaDoAluno();
 
-        int idExcluir = validaIdAluno();
+        int idTurmaDoAluno = validaIdTurmaDoAluno();
 
-        Turma turmaSelecionada = listaTurmas.get(idExcluir);
+        Turma turmaSelecionada = listaTurmas.get(idTurmaDoAluno);
 
         int contador = 1;
 
@@ -397,12 +396,31 @@ public class Main {
             }
         }
 
+        int idExcluir = validaIdAlunoExcluir();
+
         if (confirmaExclusao()){
-            listaTurmas.get(idExcluir).setAtivo(false);
+            listaAlunos.get(idExcluir).setAtivoAluno(false);
             System.out.println("Aluno excluído com sucesso!");
 
         }
 
+    }
+
+    private static int validaIdAlunoExcluir() {
+        String opcao = Leitura.dados("\nDigite o id do aluno que deseja excluir: ");
+        int opcaoValida = -1;
+        int opcaoUsuario = -1;
+        while (opcaoValida==-1){
+            opcaoUsuario = validarItemLista(opcao);
+
+            if (opcaoUsuario==-1) {
+                System.out.println("Opção inválida! Digite novamente: ");
+                opcao = Leitura.dados("\nDigite o id do aluno que deseja excluir: ");
+            } else {
+                opcaoValida = opcaoUsuario;
+            }
+        }
+        return 0;
     }
 
     private static void atualizarAluno() {
